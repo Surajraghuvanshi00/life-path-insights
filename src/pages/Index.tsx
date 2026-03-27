@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
@@ -22,24 +23,15 @@ const Index = () => {
       <LearningSection onOpenPopup={() => setPopupOpen(true)} />
       <FinalCTA onOpenPopup={() => setPopupOpen(true)} />
 
-      {/* Footer */}
-      <footer className="py-8 border-t border-border">
-        <div className="container px-4 text-center">
-          <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Numerology Insights. All rights reserved.
-          </p>
-        </div>
-      </footer>
-
       {/* Sticky Mobile CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-background/90 backdrop-blur-md border-t border-border md:hidden">
-        <button
-          onClick={() => setPopupOpen(true)}
+        <Link
+          to="/free-analysis"
           className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-heading font-semibold text-base glow-primary flex items-center justify-center gap-2"
         >
           <Sparkles className="w-4 h-4" />
           Get Free Analysis
-        </button>
+        </Link>
       </div>
 
       <ConsultationPopup isOpen={popupOpen} onClose={() => setPopupOpen(false)} />
