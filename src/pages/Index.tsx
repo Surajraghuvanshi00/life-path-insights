@@ -1,16 +1,50 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Sparkles } from "lucide-react";
+import HeroSection from "@/components/HeroSection";
+import ProblemSection from "@/components/ProblemSection";
+import HowItWorks from "@/components/HowItWorks";
+import BenefitsSection from "@/components/BenefitsSection";
+import TrustSection from "@/components/TrustSection";
+import LearningSection from "@/components/LearningSection";
+import FinalCTA from "@/components/FinalCTA";
+import ConsultationPopup from "@/components/ConsultationPopup";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [popupOpen, setPopupOpen] = useState(false);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen">
+      <HeroSection onOpenPopup={() => setPopupOpen(true)} />
+      <ProblemSection />
+      <HowItWorks />
+      <BenefitsSection />
+      <TrustSection />
+      <LearningSection onOpenPopup={() => setPopupOpen(true)} />
+      <FinalCTA onOpenPopup={() => setPopupOpen(true)} />
+
+      {/* Footer */}
+      <footer className="py-8 border-t border-border">
+        <div className="container px-4 text-center">
+          <p className="text-muted-foreground text-sm">
+            © {new Date().getFullYear()} Numerology Insights. All rights reserved.
+          </p>
+        </div>
+      </footer>
+
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-background/90 backdrop-blur-md border-t border-border md:hidden">
+        <button
+          onClick={() => setPopupOpen(true)}
+          className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-heading font-semibold text-base glow-primary flex items-center justify-center gap-2"
+        >
+          <Sparkles className="w-4 h-4" />
+          Get Free Analysis
+        </button>
+      </div>
+
+      <ConsultationPopup isOpen={popupOpen} onClose={() => setPopupOpen(false)} />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
