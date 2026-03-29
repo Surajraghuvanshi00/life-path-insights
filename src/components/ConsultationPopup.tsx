@@ -16,6 +16,9 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
   });
   const [energyColor, setEnergyColor] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
 
   const generateColor = () => {
     const hue = Math.floor(Math.random() * 360);
@@ -35,15 +38,40 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
     return `${f(0)}${f(8)}${f(4)}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmissionStatus("submitting");
+
+    try {
+      const response = await fetch(
+        "https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjcwNTZmMDYzMDA0MzE1MjZhNTUzMzEi_pc",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
+
+      if (response.ok) {
+        setSubmissionStatus("success");
+        setSubmitted(true);
+      } else {
+        setSubmissionStatus("error");
+        console.error("Webhook submission failed:", response.statusText);
+      }
+    } catch (error) {
+      setSubmissionStatus("error");
+      console.error("Error submitting form:", error);
+    }
   };
 
   const handleClose = () => {
     onClose();
     setTimeout(() => {
       setSubmitted(false);
+      setSubmissionStatus("idle");
       setForm({ name: "", phone: "", email: "", purpose: "" });
       setEnergyColor(null);
     }, 300);
@@ -164,13 +192,19 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-heading font-semibold text-base glow-primary hover:scale-[1.02] transition-transform duration-300"
+                    className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-heading font-semibold text-base glow-primary hover:scale-[1.02] transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={submissionStatus === "submitting"}
                   >
-                    Unlock My Free Insight
+                    {submissionStatus === "submitting" ? "Submitting..." : "Unlock My Free Insight"}
                   </button>
+                  {submissionStatus === "error" && (
+                    <p className="text-sm text-red-500 mt-2 text-center">
+                      Submission failed. Please try again.
+                    </p>
+                  )}
                 </form>
               </>
-            ) : (
+            ) : submissionStatus === "success" ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -192,7 +226,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                   Book Free Consultation
                 </button>
               </motion.div>
-            )}
+            ) : null}
           </motion.div>
         </motion.div>
       )}
