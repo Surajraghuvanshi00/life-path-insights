@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import logo from "/loggo.png.png"; // Updated to loggo.png.png
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -34,12 +35,7 @@ const Navbar = () => {
     >
       <div className="container px-4 flex items-center justify-between h-16 md:h-18">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-primary/15 flex items-center justify-center group-hover:glow-primary-soft transition-shadow">
-            <Sparkles className="w-4 h-4 text-primary" />
-          </div>
-          <span className="font-heading font-bold text-lg text-foreground">
-            Numero<span className="text-primary">logy</span>
-          </span>
+          <img src={logo} alt="Logo" className="h-8 w-auto max-w-24" />
         </Link>
 
         {/* Desktop nav */}

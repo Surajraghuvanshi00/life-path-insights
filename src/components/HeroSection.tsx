@@ -52,10 +52,23 @@ const HeroSection = ({ onOpenPopup }: HeroSectionProps) => {
           Get personalized insights about your career, relationships, and life direction.
         </motion.p>
 
+        {/* Sanskrit Mantras */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
+          className="mb-8 md:mb-12 text-center text-muted-foreground text-lg italic max-w-2xl mx-auto"
+        >
+          <p className="mb-2">ॐ असतो मा सद्गमय ।</p>
+          <p className="mb-2">तमसो मा ज्योतिर्गमय ।</p>
+          <p>मृत्योर्मा अमृतं गमय ॥</p>
+        </motion.div>
+        {/* End Sanskrit Mantras */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <button

@@ -9,6 +9,7 @@ import TrustSection from "@/components/TrustSection";
 import LearningSection from "@/components/LearningSection";
 import FinalCTA from "@/components/FinalCTA";
 import ConsultationPopup from "@/components/ConsultationPopup";
+import zodiacWheel from "@/assets/zodiac-wheel.png"; // Import the zodiac wheel image
 
 const Index = () => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -17,6 +18,14 @@ const Index = () => {
     <div className="min-h-screen">
       <HeroSection onOpenPopup={() => setPopupOpen(true)} />
       <ProblemSection />
+      {/* Image of Zodiac Wheel */}
+      <div className="container px-4 flex justify-center py-8 md:py-12">
+        <img
+          src={zodiacWheel}
+          alt="Man with zodiac wheel and constellations"
+          className="max-w-xs md:max-w-sm lg:max-w-md h-auto rounded-lg shadow-lg"
+        />
+      </div>
       <HowItWorks />
       <BenefitsSection />
       <TrustSection />
